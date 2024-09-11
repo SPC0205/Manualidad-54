@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Botoncito</title>
+  <style>
+    /* Add some basic styling to center the button and heart */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #F7DC6F; /* Set background color to yellow */
+    }
+    button {
+      font-size: 24px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: #fff;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #3e8e41;
+    }
+    .heart {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 70vh; /* Increase font size to 70% of viewport height */
+      color: #FFC5C5; /* Set heart color to pink */
+      opacity: 0; /* Initial opacity is 0, so the heart is invisible */
+      animation: fade-in 2s forwards; /* Add animation to fade in the heart */
+    }
+    .little-heart {
+      position: absolute;
+      font-size: 10vh;
+      color: #FFC5C5;
+      opacity: 0; /* Initial opacity is 0, so the little heart is invisible */
+      animation: fade-in 1s forwards; /* Add animation to fade in the little heart */
+    }
+    .giant-n {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 30vh;
+      color: #000; /* Set giant "N" color to black */
+      opacity: 0;
+      animation: fade-in 2s forwards;
+    }
+    @keyframes fade-in {
+      to {
+        opacity: 1; /* Final opacity is 1, so the heart is fully visible */
+      }
+    }
+  </style>
+</head>
+<body>
+  <button id="heart-button">Dame click</button>
+  <div id="heart-container"></div>
+
+  <script>
+    // Get the button and container elements
+    const button = document.getElementById('heart-button');
+    const container = document.getElementById('heart-container');
+
+    // Add an event listener to the button
+    button.addEventListener('click', () => {
+      // Create a heart symbol and add it to the container
+      const heart = document.createElement('span');
+      heart.textContent = '♥';
+      heart.className = 'heart';
+      container.appendChild(heart);
+
+      // Create a giant "N" symbol and add it to the container
+      const giantN = document.createElement('span');
+      giantN.textContent = 'N';
+      giantN.className = 'giant-n';
+      container.appendChild(giantN);
+
+      // Wait for 2 seconds, then create little hearts
+      setTimeout(() => {
+        for (let i = 0; i < 50; i++) {
+          let littleHeart;
+          do {
+            littleHeart = document.createElement('span');
+            littleHeart.textContent = '♥';
+            littleHeart.className = 'little-heart';
+            littleHeart.style.top = `${Math.random() * 100}%`;
+            littleHeart.style.left = `${Math.random() * 100}%`;
+          } while (
+            // Check if the little heart is within 20% of the big heart's size
+            Math.abs(parseInt(littleHeart.style.top) - 50) < 20 &&
+            Math.abs(parseInt(littleHeart.style.left) - 50) < 20
+          );
+          container.appendChild(littleHeart);
+        }
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
